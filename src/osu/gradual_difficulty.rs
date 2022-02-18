@@ -78,6 +78,7 @@ impl OsuGradualDifficultyAttributes {
         let mut attributes = OsuDifficultyAttributes {
             ar: map_attributes.ar,
             hp: map_attributes.hp,
+            cs: map_attributes.cs,
             od,
             ..Default::default()
         };
