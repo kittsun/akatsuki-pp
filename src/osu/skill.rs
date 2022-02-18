@@ -200,7 +200,7 @@ impl Skill {
                 self.object_strains.push(self.curr_strain);
 
                 self.curr_strain
-            },
+            }
             SkillKind::Speed {
                 curr_rhythm,
                 history,
@@ -217,8 +217,17 @@ impl Skill {
     }
 
     pub(crate) fn count_difficult_strains(&mut self, clock_rate: f64) -> f64 {
-        let top_strain = self.object_strains.clone().into_iter().reduce(f64::max).unwrap();
-        let realtime_count: f64 = self.object_strains.iter().map(|&x| f64::powf(x / top_strain, 4.0)).sum();
+        let top_strain = self
+            .object_strains
+            .clone()
+            .into_iter()
+            .reduce(f64::max)
+            .unwrap();
+        let realtime_count: f64 = self
+            .object_strains
+            .iter()
+            .map(|&x| f64::powf(x / top_strain, 4.0))
+            .sum();
 
         clock_rate * realtime_count
     }

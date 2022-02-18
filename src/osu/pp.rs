@@ -365,7 +365,7 @@ impl OsuPPInner {
                 speed_value *= f64::max(0.1, crosscheck_multiplier);
             }
         }
-        
+
         let pp = (aim_value.powf(1.1)
             + speed_value.powf(1.1)
             + acc_value.powf(1.1)
@@ -405,7 +405,8 @@ impl OsuPPInner {
         // Penalize misses
         let effective_misses = self.effective_misses as f64;
         if effective_misses > 0.0 {
-            aim_value *= calculate_miss_penalty(effective_misses, attributes.aim_difficult_strain_count);
+            aim_value *=
+                calculate_miss_penalty(effective_misses, attributes.aim_difficult_strain_count);
         }
 
         // AR bonus
@@ -416,15 +417,15 @@ impl OsuPPInner {
         } else {
             0.0
         };
-        
+
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
-        
+
         // CS bonus
-        if attributes.cs > 6.0 && self.mods.rx() {            
+        if attributes.cs > 6.0 && self.mods.rx() {
             let diff = attributes.cs - 6.0;
-            aim_value *= 1.03 + (diff / 20.0);  
+            aim_value *= 1.03 + (diff / 20.0);
         }
-        
+
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
             aim_value *= 1.04 * (12.0 - attributes.ar);
@@ -471,7 +472,8 @@ impl OsuPPInner {
         // Penalize misses
         let effective_misses = self.effective_misses as f64;
         if effective_misses > 0.0 {
-            speed_value *= calculate_miss_penalty(effective_misses, attributes.speed_difficult_strain_count);
+            speed_value *=
+                calculate_miss_penalty(effective_misses, attributes.speed_difficult_strain_count);
         }
 
         // AR bonus
@@ -609,10 +611,7 @@ fn calculate_effective_misses(
     n_misses.max(combo_based_misses.floor() as usize)
 }
 
-fn calculate_miss_penalty(
-    n_misses: f64,
-    difficult_strain_count: f64
-) -> f64 {
+fn calculate_miss_penalty(n_misses: f64, difficult_strain_count: f64) -> f64 {
     // Miss penalty assumes that a player will miss on the hardest parts of a map,
     // so we use the amount of relatively difficult sections to adjust miss penalty
     // to make it more punishing on maps with lower amount of hard sections.
