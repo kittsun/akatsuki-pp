@@ -350,21 +350,10 @@ impl OsuPPInner {
             multiplier *= 1.0 - (n_spinners as f64 / self.total_hits).powf(0.85);
         }
 
-        let mut aim_value = self.compute_aim_value();
-        let mut speed_value = self.compute_speed_value();
+        let aim_value = self.compute_aim_value();
+        let speed_value = self.compute_speed_value();
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
-
-        if self.mods.rx() {
-            let speed_crosscheck: f64 = aim_value / speed_value;
-
-            if speed_crosscheck < 1.0 {
-                let crosscheck_multiplier: f64 = f64::min(1.0, 0.735 * speed_crosscheck);
-
-                aim_value *= f64::max(0.1, crosscheck_multiplier);
-                speed_value *= f64::max(0.1, crosscheck_multiplier);
-            }
-        }
 
         let pp = (aim_value.powf(1.1)
             + speed_value.powf(1.1)
@@ -420,9 +409,9 @@ impl OsuPPInner {
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
         
         // CS bonus
-        if attributes.cs > 6.0 {            
+        if attributes.cs > 6.0 && if self.mods.rx() {            
             let diff = attributes.cs - 6.0;
-            aim_value *= 1.03 + (diff / 20.0);  
+            aim_value *= 1.0 + (diff / 50.0);  
         };
         
         // HD bonus (this would include the Blinds mod but it's currently not representable)
