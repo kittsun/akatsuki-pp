@@ -397,9 +397,7 @@ impl OsuPPInner {
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10();
+        let len_bonus = 0.95 + 0.1 * f64::min(1.0, total_hits / 2000.0) + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count);
         aim_value *= len_bonus;
 
         // Penalize misses
@@ -468,9 +466,7 @@ impl OsuPPInner {
             (5.0 * (attributes.speed_strain / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10();
+        let len_bonus = 0.95 + 0.1 * f64::min(1.0, total_hits / 2000.0) + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count);
         speed_value *= len_bonus;
 
         // Penalize misses
@@ -624,6 +620,13 @@ fn calculate_miss_penalty(n_misses: f64, difficult_strain_count: f64) -> f64 {
     // so we use the amount of relatively difficult sections to adjust miss penalty
     // to make it more punishing on maps with lower amount of hard sections.
     0.94 / ((n_misses / (2.0 * f64::sqrt(difficult_strain_count))) + 1.0)
+}
+
+fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
+    // Length bonus is a bonus for longer maps,
+    // so we use the amount of relatively difficult sections to adjust length bonus
+    // to make it more rewarding on maps with higher amount of hard sections.
+    0.98 / (1.0 + (total_hits / (2.0 * f64::sqrt(difficult_strain_count))))
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
