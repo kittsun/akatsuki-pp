@@ -503,8 +503,15 @@ impl OsuPPInner {
         }
         
         // BPM bonus (todo: add vanilla)
-        if Beatmap.BPM() > 280 && self.mods.rx() {
-            let bpm_difference = Beatmap.BPM() - 280;
+        let bpm = beatmap.bpm();
+        if self.mods.dt() {
+            bpm *= 1.5;
+        } else if self.mods.ht() {
+            bpm *= 0.75;
+        }
+        
+        if bpm > 290 && self.mods.rx() {
+            let bpm_difference = Beatmap.BPM() - 290;
             speed_value *= 1.05 + (bpm_difference / 30.0);
         }
 
