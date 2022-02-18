@@ -462,7 +462,7 @@ pub struct OsuDifficultyAttributes {
     pub od: f64,
     /// The health drain rate.
     pub hp: f64,
-    // The circle size.
+    /// The circle size.
     pub cs: f64,
     /// The amount of circles.
     pub n_circles: usize,
