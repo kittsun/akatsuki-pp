@@ -650,7 +650,8 @@ fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
 
     let max_total = total_hits.max(6000.0);
     let base_strain = f64::sqrt(difficult_strain_count);
-    f64::max(1.0, (max_total / base_strain) / 0.0675 - 4.0) / 100000.0
+    let factored_hitcount = max_total / base_strain;
+    factored_hitcount * 0.5 * (total_hits / 2000.0).log10()
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
