@@ -485,7 +485,7 @@ impl OsuPPInner {
         let ar_factor: f64;
         let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
         if attributes.ar > required_factor {
-            println!("reached ar bonus in aim");
+            println!("reached ar bonus in speed");
             ar_factor = 0.3 * (attributes.ar - required_factor)
         } else if attributes.ar < 8.0 {
             ar_factor = 0.1 * (8.0 - attributes.ar)
