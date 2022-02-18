@@ -410,13 +410,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor = if attributes.ar > 10.33 {
-            0.3 * (attributes.ar - 10.33)
+        let mut ar_factor: f64 = 0.0;
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
+        if attributes.ar > required_factor {
+            ar_factor = buff_factor * (attributes.ar - required_factor)
         } else if attributes.ar < 8.0 {
-            0.1 * (8.0 - attributes.ar)
-        } else {
-            0.0
-        };
+            ar_factor = 0.1 * (8.0 - attributes.ar)
+        }
 
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
@@ -481,11 +482,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor = if attributes.ar > 10.33 {
-            0.3 * (attributes.ar - 10.33)
-        } else {
-            0.0
-        };
+        let mut ar_factor: f64 = 0.0;
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
+        if attributes.ar > required_factor {
+            ar_factor = buff_factor * (attributes.ar - required_factor)
+        } else if attributes.ar < 8.0 {
+            ar_factor = 0.1 * (8.0 - attributes.ar)
+        }
 
         speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
