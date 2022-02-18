@@ -423,7 +423,7 @@ impl OsuPPInner {
         if attributes.cs > 6.0 && if self.mods.rx() {            
             let diff = attributes.cs - 6.0;
             aim_value *= 1.03 + (diff / 20.0);  
-        };
+        }
         
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
