@@ -405,9 +405,17 @@ impl OsuPPInner {
         } else {
             0.0
         };
-
+        
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
-
+        
+        // CS bonus
+        let cs_factor = if attributes.cs > 5.7 {            
+            diff = attributes.cs - 5.7
+            aim_value *= 1.0 + (diff / 50.0)
+        } else {
+            aim_value = 1.0     
+        };
+        
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
             aim_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
