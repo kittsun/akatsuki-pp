@@ -412,8 +412,8 @@ impl OsuPPInner {
         // AR bonus
         let ar_factor: f64;
         if self.mods.rx() {
-            ar_factor = if attributes.ar > 10.33 {
-                0.27 * (attributes.ar - 10.33)
+            ar_factor = if attributes.ar > 10.5 {
+                0.35 * (attributes.ar - 10.5)
             } else if attributes.ar < 8.0 {
                 0.1 * (8.0 - attributes.ar)
             } else {
