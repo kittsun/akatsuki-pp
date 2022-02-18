@@ -501,6 +501,12 @@ impl OsuPPInner {
                 speed_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
             }
         }
+        
+        // BPM bonus (todo: add vanilla)
+        if Beatmap.BPM() > 280 && self.mods.rx() {
+            let bpm_difference = Beatmap.BPM() - 280;
+            speed_value *= 1.05 + (bpm_difference / 30.0);
+        }
 
         // Scaling the speed value with accuracy and OD
         let od_factor = 0.95 + attributes.od * attributes.od / 750.0;
