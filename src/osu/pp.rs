@@ -429,9 +429,9 @@ impl OsuPPInner {
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
             if self.mods.rx() {
-                aim_value *= 1.05 * (11.5 - attributes.ar);
+                aim_value *= 1.0 + 0.05 * (11.5 - attributes.ar);
             } else {
-                aim_value *= 1.04 * (12.0 - attributes.ar);
+                aim_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
             }
         }
 
@@ -492,9 +492,9 @@ impl OsuPPInner {
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
             if self.mods.rx() {
-                speed_value *= 1.05 * (11.5 - attributes.ar);
+                speed_value *= 1.0 + 0.05 * (11.5 - attributes.ar);
             } else {
-                speed_value *= 1.04 * (12.0 - attributes.ar);
+                speed_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
             }
         }
 
