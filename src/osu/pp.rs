@@ -630,7 +630,12 @@ fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
     // Length bonus is a bonus for longer maps,
     // so we use the amount of relatively difficult sections to adjust length bonus
     // to make it more rewarding on maps with higher amount of hard sections.
-    0.98 / (1.0 + (total_hits / (2.0 * f64::sqrt(difficult_strain_count))))
+    if total_hits > 2000.0 {
+        return 0.0;
+    }
+
+    let max_total = total_hits.max(6000.0);
+    0.98 / (1.0 + (max_total / (2.0 * f64::sqrt(difficult_strain_count))))
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
