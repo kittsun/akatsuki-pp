@@ -410,24 +410,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor: f64;
-        if self.mods.rx() {
-            ar_factor = if attributes.ar > 10.5 {
-                0.3 * (attributes.ar - 10.5)
-            } else if attributes.ar < 8.0 {
-                0.1 * (8.0 - attributes.ar)
-            } else {
-                0.0
-            };
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let ar_factor = if attributes.ar > required_factor {
+            0.3 * (attributes.ar - required_factor)
+        } else if attributes.ar < 8.0 {
+            0.1 * (8.0 - attributes.ar)
         } else {
-            ar_factor = if attributes.ar > 10.33 {
-                0.3 * (attributes.ar - 10.33)
-            } else if attributes.ar < 8.0 {
-                0.1 * (8.0 - attributes.ar)
-            } else {
-                0.0
-            };
-        }
+            0.0
+        };
 
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
@@ -492,24 +482,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor: f64;
-        if self.mods.rx() {
-            ar_factor = if attributes.ar > 10.5 {
-                0.3 * (attributes.ar - 10.5)
-            } else if attributes.ar < 8.0 {
-                0.1 * (8.0 - attributes.ar)
-            } else {
-                0.0
-            };
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let ar_factor = if attributes.ar > required_factor {
+            0.3 * (attributes.ar - required_factor)
+        } else if attributes.ar < 8.0 {
+            0.1 * (8.0 - attributes.ar)
         } else {
-            ar_factor = if attributes.ar > 10.33 {
-                0.3 * (attributes.ar - 10.33)
-            } else if attributes.ar < 8.0 {
-                0.1 * (8.0 - attributes.ar)
-            } else {
-                0.0
-            };
-        }
+            0.0
+        };
 
         speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
