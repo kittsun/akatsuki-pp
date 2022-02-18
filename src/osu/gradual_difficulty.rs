@@ -111,7 +111,7 @@ impl OsuGradualDifficultyAttributes {
             old_stacking(&mut hit_objects, stack_threshold);
         }
 
-        let skills = Skills::new(hit_window, mods.rx(), scaling_factor.radius(), mods.fl());
+        let skills = Skills::new(hit_window, false, scaling_factor.radius(), mods.fl());
 
         let hit_objects = OsuObjectIter {
             hit_objects: hit_objects.into_iter(),

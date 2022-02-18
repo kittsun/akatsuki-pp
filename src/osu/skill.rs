@@ -19,10 +19,7 @@ impl Skills {
 
         skills.push(Skill::aim(true));
         skills.push(Skill::aim(false));
-
-        if !rx {
-            skills.push(Skill::speed(hit_window));
-        }
+        skills.push(Skill::speed(hit_window));
 
         if fl {
             // NOTE: Instead of having `NORMALIZED_RADIUS` as dividend, it still uses 52.0.

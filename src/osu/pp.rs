@@ -499,10 +499,6 @@ impl OsuPPInner {
     }
 
     fn compute_accuracy_value(&self) -> f64 {
-        if self.mods.rx() {
-            return 0.0;
-        }
-
         let attributes = &self.attributes;
         let total_hits = self.total_hits;
         let n_circles = attributes.n_circles as f64;

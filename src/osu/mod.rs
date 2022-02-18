@@ -223,7 +223,7 @@ fn calculate_skills(
         h
     });
 
-    let mut skills = Skills::new(hit_window, mods.rx(), scaling_factor.radius(), mods.fl());
+    let mut skills = Skills::new(hit_window, false, scaling_factor.radius(), mods.fl());
 
     let (mut prev, curr) = match (hit_objects.next(), hit_objects.next()) {
         (Some(prev), Some(curr)) => (prev, curr),
@@ -441,6 +441,10 @@ pub struct OsuDifficultyAttributes {
     pub flashlight_rating: f64,
     /// The ratio of the aim strain with and without considering sliders
     pub slider_factor: f64,
+    /// The amount of difficult aim strains
+    pub aim_difficult_strain_count: f64,
+    /// The amount of difficult speed strains
+    pub speed_difficult_strain_count: f64,
     /// The approach rate.
     pub ar: f64,
     /// The overall difficulty
