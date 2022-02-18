@@ -93,6 +93,8 @@ pub(crate) struct Skill {
     pub(crate) strain_peaks: Vec<f64>,
 
     prev_time: Option<f64>,
+
+    pub(crate) object_strains: Vec<f64>,
 }
 
 impl Skill {
@@ -121,6 +123,7 @@ impl Skill {
             strain_peaks: Vec::with_capacity(128),
 
             prev_time: None,
+            object_strains: Vec::new(),
         }
     }
 
@@ -193,7 +196,11 @@ impl Skill {
         self.curr_strain += self.kind.strain_value_of(curr) * self.kind.skill_multiplier();
 
         match &mut self.kind {
-            SkillKind::Aim { .. } | SkillKind::Flashlight { .. } => self.curr_strain,
+            SkillKind::Aim { .. } | SkillKind::Flashlight { .. } => {
+                self.object_strains.push(self.curr_strain);
+
+                self.curr_strain
+            },
             SkillKind::Speed {
                 curr_rhythm,
                 history,
@@ -201,9 +208,19 @@ impl Skill {
             } => {
                 *curr_rhythm = calculate_speed_rhythm_bonus(curr, history, *hit_window);
 
-                self.curr_strain * *curr_rhythm
+                let total_strain = self.curr_strain * *curr_rhythm;
+                self.object_strains.push(total_strain);
+
+                total_strain
             }
         }
+    }
+
+    pub(crate) fn count_difficult_strains(&mut self, clock_rate: f64) -> f64 {
+        let top_strain = self.object_strains.clone().into_iter().reduce(f64::max).unwrap();
+        let realtime_count: f64 = self.object_strains.iter().map(|&x| f64::powf(x / top_strain, 4.0)).sum();
+
+        clock_rate * realtime_count
     }
 }
 

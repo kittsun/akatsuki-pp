@@ -84,11 +84,15 @@ pub fn stars(
     };
 
     let star_rating = calculate_star_rating(aim_rating, speed_rating, flashlight_rating);
+    let aim_difficult_strain_count = skills.aim().count_difficult_strains(map.attributes().clock_rate);
+    let speed_difficult_strain_count = skills.speed_flashlight().0.unwrap().count_difficult_strains(map.attributes().clock_rate);
 
     attributes.aim_strain = aim_rating;
     attributes.speed_strain = speed_rating;
     attributes.flashlight_rating = flashlight_rating;
     attributes.slider_factor = slider_factor;
+    attributes.aim_difficult_strain_count = aim_difficult_strain_count;
+    attributes.speed_difficult_strain_count = speed_difficult_strain_count;
     attributes.stars = star_rating;
 
     attributes

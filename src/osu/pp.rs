@@ -392,15 +392,9 @@ impl OsuPPInner {
         aim_value *= len_bonus;
 
         // Penalize misses
-        let effective_misses = self.effective_misses as i32;
-        if effective_misses > 0 {
-            aim_value *= 0.97
-                * (1.0 - (effective_misses as f64 / total_hits).powf(0.775)).powi(effective_misses);
-        }
-
-        // Combo scaling
-        if let Some(combo) = self.combo.filter(|_| attributes.max_combo > 0) {
-            aim_value *= ((combo as f64 / attributes.max_combo as f64).powf(0.8)).min(1.0);
+        let effective_misses = self.effective_misses as f64;
+        if effective_misses > 0.0 {
+            aim_value *= calculate_miss_penalty(effective_misses, attributes.aim_difficult_strain_count);
         }
 
         // AR bonus
@@ -460,14 +454,7 @@ impl OsuPPInner {
         // Penalize misses
         let effective_misses = self.effective_misses as f64;
         if effective_misses > 0.0 {
-            speed_value *= 0.97
-                * (1.0 - (effective_misses / total_hits).powf(0.775))
-                    .powf(effective_misses.powf(0.875));
-        }
-
-        // Combo scaling
-        if let Some(combo) = self.combo.filter(|_| attributes.max_combo > 0) {
-            speed_value *= ((combo as f64 / attributes.max_combo as f64).powf(0.8)).min(1.0);
+            speed_value *= calculate_miss_penalty(effective_misses, attributes.speed_difficult_strain_count);
         }
 
         // AR bonus
@@ -603,6 +590,16 @@ fn calculate_effective_misses(
     combo_based_misses = combo_based_misses.min(total_hits);
 
     n_misses.max(combo_based_misses.floor() as usize)
+}
+
+fn calculate_miss_penalty(
+    n_misses: f64,
+    difficult_strain_count: f64
+) -> f64 {
+    // Miss penalty assumes that a player will miss on the hardest parts of a map,
+    // so we use the amount of relatively difficult sections to adjust miss penalty
+    // to make it more punishing on maps with lower amount of hard sections.
+    0.94 / ((n_misses / (2.0 * f64::sqrt(difficult_strain_count))) + 1.0)
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
