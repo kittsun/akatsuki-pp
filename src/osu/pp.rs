@@ -411,7 +411,7 @@ impl OsuPPInner {
         // CS bonus
         if attributes.cs > 6.0 {            
             let diff = attributes.cs - 6.0;
-            aim_value *= 1.0 + (diff / 50.0);  
+            aim_value *= 1.0 + (diff / 20.0);  
         };
         
         // HD bonus (this would include the Blinds mod but it's currently not representable)
