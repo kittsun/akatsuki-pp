@@ -336,7 +336,7 @@ struct OsuPPInner {
 }
 
 impl OsuPPInner {
-    fn calculate(mut self) -> OsuPerformanceAttributes {
+    fn calculate(self) -> OsuPerformanceAttributes {
         let mut multiplier = 1.12;
 
         // NF penalty
