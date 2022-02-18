@@ -365,7 +365,7 @@ impl OsuPPInner {
                 speed_value *= f64::max(0.1, crosscheck_multiplier);
             }
         }
-
+        
         let pp = (aim_value.powf(1.1)
             + speed_value.powf(1.1)
             + acc_value.powf(1.1)
@@ -416,12 +416,18 @@ impl OsuPPInner {
         } else {
             0.0
         };
-
+        
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
-
+        
+        // CS bonus
+        if attributes.cs > 6.0 && if self.mods.rx() {            
+            let diff = attributes.cs - 6.0;
+            aim_value *= 1.03 + (diff / 20.0);  
+        };
+        
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
-            aim_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
+            aim_value *= 1.04 * (12.0 - attributes.ar);
         }
 
         if attributes.n_sliders > 0 {
