@@ -420,7 +420,7 @@ impl OsuPPInner {
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
         
         // CS bonus
-        if attributes.cs > 6.0 && if self.mods.rx() {            
+        if attributes.cs > 6.0 && self.mods.rx() {            
             let diff = attributes.cs - 6.0;
             aim_value *= 1.03 + (diff / 20.0);  
         }
