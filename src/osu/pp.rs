@@ -373,12 +373,17 @@ impl OsuPPInner {
         .powf(1.0 / 1.1)
             * multiplier;
 
+        let aim_strain = self.attributes.aim_difficult_strain_count;
+        let speed_strain = self.attributes.speed_difficult_strain_count;
+
         OsuPerformanceAttributes {
             difficulty: self.attributes,
             pp_acc: acc_value,
             pp_aim: aim_value,
             pp_flashlight: flashlight_value,
             pp_speed: speed_value,
+            aim_strain_count: aim_strain,
+            speed_strain_count: speed_strain,
             pp,
         }
     }
@@ -398,9 +403,14 @@ impl OsuPPInner {
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10();
+        let len_bonus = if self.mods.rx() {
+            0.97 + 0.1 * f64::min(1.0, total_hits / 2000.0)
+                + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count)
+        } else {
+            0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
+                + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
+        };
+
         aim_value *= len_bonus;
 
         // Penalize misses
@@ -411,13 +421,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor = if attributes.ar > 10.33 {
-            0.3 * (attributes.ar - 10.33)
+        let mut ar_factor: f64 = 0.0;
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
+        if attributes.ar > required_factor {
+            ar_factor = buff_factor * (attributes.ar - required_factor)
         } else if attributes.ar < 8.0 {
-            0.1 * (8.0 - attributes.ar)
-        } else {
-            0.0
-        };
+            ar_factor = 0.1 * (8.0 - attributes.ar)
+        }
 
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
@@ -469,9 +480,14 @@ impl OsuPPInner {
             (5.0 * (attributes.speed_strain / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10();
+        let len_bonus = if self.mods.rx() {
+            0.97 + 0.1 * f64::min(1.0, total_hits / 2000.0)
+                + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count)
+        } else {
+            0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
+                + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
+        };
+
         speed_value *= len_bonus;
 
         // Penalize misses
@@ -482,11 +498,14 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let ar_factor = if attributes.ar > 10.33 {
-            0.3 * (attributes.ar - 10.33)
-        } else {
-            0.0
-        };
+        let mut ar_factor: f64 = 0.0;
+        let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
+        let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
+        if attributes.ar > required_factor {
+            ar_factor = buff_factor * (attributes.ar - required_factor)
+        } else if attributes.ar < 8.0 {
+            ar_factor = 0.1 * (8.0 - attributes.ar)
+        }
 
         speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
@@ -637,6 +656,20 @@ fn calculate_miss_penalty(n_misses: f64, difficult_strain_count: f64) -> f64 {
     // so we use the amount of relatively difficult sections to adjust miss penalty
     // to make it more punishing on maps with lower amount of hard sections.
     0.94 / ((n_misses / (2.0 * f64::sqrt(difficult_strain_count))) + 1.0)
+}
+
+fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
+    // Length bonus is a bonus for longer maps,
+    // so we use the amount of relatively difficult sections to adjust length bonus
+    // to make it more rewarding on maps with higher amount of hard sections.
+    if total_hits < 2000.0 {
+        return 0.0;
+    }
+
+    let max_total = total_hits.max(6000.0);
+    let base_strain = f64::sqrt(difficult_strain_count);
+    let factored_hitcount = (max_total * base_strain) / 15.0;
+    (factored_hitcount / 2000.0).log10()
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
