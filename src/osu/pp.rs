@@ -360,7 +360,7 @@ impl OsuPPInner {
 
             if speed_crosscheck < 1.0 {
                 println!("speed crosscheck = {} on map with combo {}", speed_crosscheck, self.attributes.max_combo);
-                aim_value *= f64::max(0.1, f64::max(0.95, speed_crosscheck));
+                aim_value *= f64::max(0.1, f64::max(0.95, 0.75 * speed_crosscheck));
             }
         }
 
