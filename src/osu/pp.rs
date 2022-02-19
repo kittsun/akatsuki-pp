@@ -519,7 +519,7 @@ impl<'map> OsuPPInner<'map> {
                 speed_value *= 1.0 + 0.04 * (12.0 - attributes.ar);
             }
         }
-        
+
         // BPM bonus (todo: add vanilla)
         let mut bpm = self.map.bpm();
         if self.mods.dt() {
@@ -527,7 +527,7 @@ impl<'map> OsuPPInner<'map> {
         } else if self.mods.ht() {
             bpm *= 0.75;
         }
-        
+
         if bpm > 290.0 && self.mods.rx() {
             let bpm_difference = self.map.bpm() - 290.0;
             speed_value *= 1.05 + (bpm_difference / 30.0);
