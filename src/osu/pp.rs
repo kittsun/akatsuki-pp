@@ -323,9 +323,9 @@ impl<'map> OsuPP<'map> {
     }
 }
 
-struct OsuPPInner {
+struct OsuPPInner<'map> {
     attributes: OsuDifficultyAttributes,
-    map: &Beatmap,
+    map: &'map Beatmap,
     mods: u32,
     acc: f64,
     combo: Option<usize>,
