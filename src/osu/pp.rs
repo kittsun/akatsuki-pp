@@ -351,7 +351,7 @@ impl OsuPPInner {
         }
 
         let mut aim_value = self.compute_aim_value();
-        let mut speed_value = self.compute_speed_value();
+        let speed_value = self.compute_speed_value();
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
 
@@ -360,11 +360,11 @@ impl OsuPPInner {
 
             if speed_crosscheck < 1.0 {
                 println!("speed crosscheck = {} on map with combo {}", speed_crosscheck, self.attributes.max_combo);
-                aim_value *= f64::max(0.1, f64::max(0.95, 1.7 * speed_crosscheck));
+                aim_value *= f64::max(0.1, f64::max(0.95, 1.5 * speed_crosscheck));
             }
         }
 
-        let speed_factor = if self.mods.rx() { 0.75 } else { 1.1 };
+        let speed_factor = if self.mods.rx() { 0.95 } else { 1.1 };
         let aim_factor = if self.mods.rx() { 1.12 } else { 1.1 };
         let acc_factor = if self.mods.rx() { 1.12 } else { 1.1 };
         let pp = (aim_value.powf(aim_factor)
