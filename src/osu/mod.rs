@@ -499,6 +499,10 @@ pub struct OsuPerformanceAttributes {
     pub pp_flashlight: f64,
     /// The speed portion of the final pp.
     pub pp_speed: f64,
+    /// The aim strain count for the map.
+    pub aim_strain_count: f64,
+    /// The speed strain count for the map.
+    pub speed_strain_count: f64,
 }
 
 impl OsuPerformanceAttributes {
