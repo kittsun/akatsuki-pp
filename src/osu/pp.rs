@@ -366,8 +366,8 @@ impl OsuPPInner {
            aim_value *= (1.01 + aim_strain_value);
            speed_value *= (1.01 + speed_strain_value);
            
-           println!(a_strain_factor)
-           println!(s_strain_factor)
+           println!("aim strain:{}", a_strain_factor)
+           println!("speed strain: {}\n", s_strain_factor)
        }
 
         if self.mods.rx() {
