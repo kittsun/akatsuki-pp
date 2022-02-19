@@ -528,8 +528,8 @@ impl<'map> OsuPPInner<'map> {
             bpm *= 0.75;
         }
         
-        if bpm > 290 && self.mods.rx() {
-            let bpm_difference = self.map.bpm() - 290;
+        if bpm > 290.0 && self.mods.rx() {
+            let bpm_difference = self.map.bpm() - 290.0;
             speed_value *= 1.05 + (bpm_difference / 30.0);
         }
 
