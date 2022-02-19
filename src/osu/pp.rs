@@ -564,14 +564,15 @@ impl OsuPPInner {
     
     // Non-DT + HT buff
     if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
-        let a_strain_factor = attributes.aim_difficult_strain_count
-        let s_strain_factor = attributes.speed_difficult_strain_count
+        let a_strain_factor = attributes.aim_difficult_strain_count;
+        let s_strain_factor = attributes.speed_difficult_strain_count;
         
-        aim_strain_value = (a_strain_factor * (a_strain_factor / 2)) / 1000
-        speed_strain_value = (s_strain_factor * (s_strain_factor / 2)) / 1000
+        aim_strain_value = (a_strain_factor * (a_strain_factor / 2)) / 1000;
+        speed_strain_value = (s_strain_factor * (s_strain_factor / 2)) / 1000;
         
-        aim_value *= (1.01 + aim_strain_value)
-        speed_value *= (1.02 + speed_strain_value)
+        aim_value *= (1.01 + aim_strain_value);
+        speed_value *= (1.02 + speed_strain_value);
+    }
 
     fn compute_flashlight_value(&self) -> f64 {
         if !self.mods.fl() {
