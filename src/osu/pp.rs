@@ -359,7 +359,7 @@ impl OsuPPInner {
             let speed_crosscheck: f64 = aim_value / speed_value;
 
             if speed_crosscheck < 1.0 {
-                let crosscheck_multiplier: f64 = f64::min(1.0, 0.75 * speed_crosscheck);
+                let crosscheck_multiplier: f64 = f64::min(1.0, 0.85 * speed_crosscheck);
 
                 aim_value *= f64::max(0.1, crosscheck_multiplier);
                 speed_value *= f64::max(0.1, crosscheck_multiplier);
