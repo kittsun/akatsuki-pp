@@ -349,23 +349,23 @@ impl OsuPPInner {
             let n_spinners = self.attributes.n_spinners;
             multiplier *= 1.0 - (n_spinners as f64 / self.total_hits).powf(0.85);
         }
-        
-        // Non-DT + HT buff
-        if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
-            let a_strain_factor = self.attributes.aim_difficult_strain_count;
-            let s_strain_factor = self.attributes.speed_difficult_strain_count;
-            
-            let aim_strain_value = (a_strain_factor * (a_strain_factor / 2.0)) / 1000.0;
-            let speed_strain_value = (s_strain_factor * (s_strain_factor / 2.0)) / 1000.0;
-            
-            aim_value *= (1.01 + aim_strain_value);
-            speed_value *= (1.02 + speed_strain_value);
-    }
 
         let mut aim_value = self.compute_aim_value();
         let mut speed_value = self.compute_speed_value();
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
+
+       // Non-DT + HT buff
+       if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
+           let a_strain_factor = self.attributes.aim_difficult_strain_count;
+           let s_strain_factor = self.attributes.speed_difficult_strain_count;
+
+           let aim_strain_value = (a_strain_factor * (a_strain_factor / 2.0)) / 1000.0;
+           let speed_strain_value = (s_strain_factor * (s_strain_factor / 2.0)) / 1000.0;
+           
+           aim_value *= (1.01 + aim_strain_value);
+           speed_value *= (1.02 + speed_strain_value);
+       }
 
         if self.mods.rx() {
             let speed_crosscheck: f64 = aim_value / speed_value;
@@ -399,7 +399,7 @@ impl OsuPPInner {
             pp,
         }
     }
-        
+
 
     fn compute_aim_value(&self) -> f64 {
         let attributes = &self.attributes;
