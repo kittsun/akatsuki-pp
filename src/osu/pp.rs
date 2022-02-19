@@ -359,15 +359,17 @@ impl OsuPPInner {
             let speed_crosscheck: f64 = aim_value / speed_value;
 
             if speed_crosscheck < 1.0 {
-                let crosscheck_multiplier: f64 = f64::min(1.0, 0.735 * speed_crosscheck);
+                let crosscheck_multiplier: f64 = f64::min(1.0, 0.75 * speed_crosscheck);
 
                 aim_value *= f64::max(0.1, crosscheck_multiplier);
                 speed_value *= f64::max(0.1, crosscheck_multiplier);
             }
         }
 
-        let pp = (aim_value.powf(1.1)
-            + speed_value.powf(1.1)
+        let aim_factor = if self.mods.rx() { 1.12 } else { 1.1 };
+        let speed_factor = if self.mods.rx() { 1.05 } else { 1.1 }; 
+        let pp = (aim_value.powf(aim_factor)
+            + speed_value.powf(speed_factor)
             + acc_value.powf(1.1)
             + flashlight_value.powf(1.1))
         .powf(1.0 / 1.1)
