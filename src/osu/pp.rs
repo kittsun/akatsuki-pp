@@ -363,7 +363,7 @@ impl OsuPPInner {
            let aim_strain_value = a_strain_factor / 10000;
            let speed_strain_value = s_strain_factor / 10000;
            
-           aim_value *= (1.02 + aim_strain_value);
+           aim_value *= (1.01 + aim_strain_value);
            speed_value *= (1.01 + speed_strain_value);
        }
 
