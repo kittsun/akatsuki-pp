@@ -224,7 +224,7 @@ impl<'map> OsuPP<'map> {
         self
     }
 
-    fn assert_hitresults(self, attributes: OsuDifficultyAttributes) -> OsuPPInner {
+    fn assert_hitresults(self, attributes: OsuDifficultyAttributes) -> OsuPPInner<'map> {
         let mut n300 = self.n300;
         let mut n100 = self.n100;
         let mut n50 = self.n50;
@@ -338,7 +338,7 @@ struct OsuPPInner<'map> {
     effective_misses: usize,
 }
 
-impl OsuPPInner {
+impl<'map> OsuPPInner<'map> {
     fn calculate(self) -> OsuPerformanceAttributes {
         let mut multiplier = 1.12;
 
