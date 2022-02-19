@@ -502,7 +502,7 @@ pub struct OsuPerformanceAttributes {
     /// The aim strain count for the map.
     pub aim_strain_count: f64,
     /// The speed strain count for the map.
-    pub speed_strain_count: f64
+    pub speed_strain_count: f64,
 }
 
 impl OsuPerformanceAttributes {
