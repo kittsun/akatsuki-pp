@@ -518,7 +518,7 @@ impl OsuPPInner {
         }
         
         // BPM bonus (todo: add vanilla)
-        let bpm = beatmap.bpm();
+        let bpm = Beatmap.BPM();
         if self.mods.dt() {
             bpm *= 1.5;
         } else if self.mods.ht() {
