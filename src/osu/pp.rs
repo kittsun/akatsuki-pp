@@ -382,6 +382,7 @@ impl OsuPPInner {
             pp,
         }
     }
+        
 
     fn compute_aim_value(&self) -> f64 {
         let attributes = &self.attributes;
@@ -541,6 +542,18 @@ impl OsuPPInner {
 
         acc_value
     }
+    
+    // Non-DT + HT buff
+    if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
+        let a_strain_factor = attributes.aim_difficult_strain_count
+        let s_strain_factor = attributes.speed_difficult_strain_count
+        let bpm_factor = Beatmap.bpm()
+        
+        aim_strain_value = ()
+        speed_strain_value = ()
+        
+        aim_value *= 1.0
+        speed_value *= 1.0
 
     fn compute_flashlight_value(&self) -> f64 {
         if !self.mods.fl() {
