@@ -366,8 +366,7 @@ impl OsuPPInner {
             }
         }
 
-        let aim_factor = if self.mods.rx() { 1.07 } else { 1.1 };
-        let pp = (aim_value.powf(aim_factor)
+        let pp = (aim_value.powf(1.1)
             + speed_value.powf(1.1)
             + acc_value.powf(1.1)
             + flashlight_value.powf(1.1))
