@@ -659,7 +659,7 @@ fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
 
     let max_total = total_hits.max(6000.0);
     let base_strain = f64::sqrt(difficult_strain_count);
-    let factored_hitcount = (max_total * base_strain) / 30.0;
+    let factored_hitcount = (max_total * base_strain) / 50.0;
     (factored_hitcount / 2000.0).log10()
 }
 
