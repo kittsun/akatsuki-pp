@@ -366,8 +366,8 @@ impl OsuPPInner {
             }
         }
 
-        let aim_factor = if self.mods.rx() { 1.2 } else { 1.1 };
-        let speed_factor = if self.mods.rx() { 0.95 } else { 1.1 };
+        let aim_factor = if self.mods.rx() { 1.15 } else { 1.1 };
+        let speed_factor = if self.mods.rx() { 1.05 } else { 1.1 };
 
         let pp = (aim_value.powf(aim_factor)
             + speed_value.powf(speed_factor)
