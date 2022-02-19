@@ -374,12 +374,17 @@ impl OsuPPInner {
         .powf(1.0 / 1.1)
             * multiplier;
 
+        let aim_strain = self.attributes.aim_difficult_strain_count;
+        let speed_strain = self.attributes.speed_difficult_strain_count;
+
         OsuPerformanceAttributes {
             difficulty: self.attributes,
             pp_acc: acc_value,
             pp_aim: aim_value,
             pp_flashlight: flashlight_value,
             pp_speed: speed_value,
+            aim_strain_count: aim_strain,
+            speed_strain_count: speed_strain,
             pp,
         }
     }
