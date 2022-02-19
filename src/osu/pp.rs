@@ -521,7 +521,7 @@ impl<'map> OsuPPInner<'map> {
         }
         
         // BPM bonus (todo: add vanilla)
-        let bpm = self.map.bpm();
+        let mut bpm = self.map.bpm();
         if self.mods.dt() {
             bpm *= 1.5;
         } else if self.mods.ht() {
