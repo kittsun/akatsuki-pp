@@ -404,7 +404,7 @@ impl OsuPPInner {
 
         // Longer maps are worth more
         let len_bonus = if self.mods.rx() {
-            0.97 + 0.1 * f64::min(1.0, total_hits / 2000.0)
+            0.95 + 0.4 * f64::min(1.0, total_hits / 2000.0)
                 + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count)
         } else {
             0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
@@ -668,7 +668,7 @@ fn calculate_length_bonus(total_hits: f64, difficult_strain_count: f64) -> f64 {
 
     let max_total = total_hits.max(6000.0);
     let base_strain = f64::sqrt(difficult_strain_count);
-    let factored_hitcount = (max_total * base_strain) / 15.0;
+    let factored_hitcount = (max_total * base_strain) / 50.0;
     (factored_hitcount / 2000.0).log10()
 }
 
