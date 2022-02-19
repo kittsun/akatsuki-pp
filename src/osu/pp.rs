@@ -411,6 +411,8 @@ impl OsuPPInner {
                 + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
         };
 
+        println!("aim length bonus: {}", len_bonus);
+
         aim_value *= len_bonus;
 
         // Penalize misses
@@ -487,6 +489,8 @@ impl OsuPPInner {
             0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
                 + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
         };
+
+        println!("speed length bonus: {}", len_bonus);
 
         speed_value *= len_bonus;
 
