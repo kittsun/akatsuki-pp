@@ -566,7 +566,6 @@ impl OsuPPInner {
     if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
         let a_strain_factor = attributes.aim_difficult_strain_count
         let s_strain_factor = attributes.speed_difficult_strain_count
-        let bpm_factor = Beatmap.bpm()
         
         aim_strain_value = (a_strain_factor * (a_strain_factor / 2)) / 1000
         speed_strain_value = (s_strain_factor * (s_strain_factor / 2)) / 1000
