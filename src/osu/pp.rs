@@ -423,7 +423,7 @@ impl OsuPPInner {
         let mut ar_factor: f64 = 0.0;
         let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
         let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
-        let low_factor = if self.mods.rx() { 0.6 } else { 0.1 };
+        let low_factor = if self.mods.rx() { 1.0 } else { 0.1 };
         if attributes.ar > required_factor {
             ar_factor = buff_factor * (attributes.ar - required_factor);
         } else if attributes.ar < 8.0 {
@@ -501,7 +501,7 @@ impl OsuPPInner {
         let mut ar_factor: f64 = 0.0;
         let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
         let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
-        let low_factor = if self.mods.rx() { 0.6 } else { 0.1 };
+        let low_factor = if self.mods.rx() { 1.0 } else { 0.1 };
         if attributes.ar > required_factor {
             ar_factor = buff_factor * (attributes.ar - required_factor);
         } else if attributes.ar < 8.0 {
