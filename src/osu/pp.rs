@@ -245,6 +245,7 @@ impl<'map> OsuPP<'map> {
 
             OsuPPInner {
                 attributes,
+                self.map,
                 mods: self.mods,
                 combo: self.combo,
                 acc,
@@ -298,6 +299,7 @@ impl<'map> OsuPP<'map> {
 
             OsuPPInner {
                 attributes,
+                self.map,
                 mods: self.mods,
                 combo: self.combo,
                 acc,
@@ -518,7 +520,7 @@ impl OsuPPInner {
         }
         
         // BPM bonus (todo: add vanilla)
-        let bpm = Beatmap.BPM();
+        let bpm = self.map.BPM();
         if self.mods.dt() {
             bpm *= 1.5;
         } else if self.mods.ht() {
@@ -526,7 +528,7 @@ impl OsuPPInner {
         }
         
         if bpm > 290 && self.mods.rx() {
-            let bpm_difference = Beatmap.BPM() - 290;
+            let bpm_difference = self.map.BPM() - 290;
             speed_value *= 1.05 + (bpm_difference / 30.0);
         }
 
