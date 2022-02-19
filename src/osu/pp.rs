@@ -506,7 +506,7 @@ impl OsuPPInner {
             ar_factor = buff_factor * (attributes.ar - required_factor);
         } else if attributes.ar < 8.0 {
             ar_factor = low_factor * (8.0 - attributes.ar);
-w        }
+        }
 
         speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
