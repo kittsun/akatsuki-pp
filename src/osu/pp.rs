@@ -362,9 +362,9 @@ impl OsuPPInner {
 
             let aim_strain_value = a_strain_factor / 10000.0;
             let speed_strain_value = s_strain_factor / 10000.0;
- 
+
             aim_value *= 1.01 + aim_strain_value;
-            speed_value *= 1.01 + speed_strain_value; 
+            speed_value *= 1.01 + speed_strain_value;
         }
 
         if self.mods.rx() {
