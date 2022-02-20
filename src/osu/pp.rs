@@ -354,7 +354,7 @@ impl OsuPPInner {
         let mut speed_value = self.compute_speed_value();
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
-        
+
         // Non-DT + HT buff
         if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
             let a_strain_factor = self.attributes.aim_difficult_strain_count;
@@ -362,10 +362,10 @@ impl OsuPPInner {
             
             let aim_strain_value = a_strain_factor / 10000.0;
             let speed_strain_value = s_strain_factor / 10000.0;
-            
+
             aim_value *= 1.01 + aim_strain_value;
             speed_value *= 1.01 + speed_strain_value;          
-       }
+        }
 
         if self.mods.rx() {
             let speed_crosscheck: f64 = aim_value / speed_value;
