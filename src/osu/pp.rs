@@ -359,7 +359,7 @@ impl OsuPPInner {
         if !self.mods.dt() && !self.mods.ht() && self.mods.rx() {
             let a_strain_factor = self.attributes.aim_difficult_strain_count;
             let s_strain_factor = self.attributes.speed_difficult_strain_count;
-            
+
             let aim_strain_value = a_strain_factor / 10000.0;
             let speed_strain_value = s_strain_factor / 10000.0;
 
