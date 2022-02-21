@@ -413,16 +413,21 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let mut ar_factor: f64 = 0.0;
         let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
         let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
-        if attributes.ar > required_factor {
-            ar_factor = buff_factor * (attributes.ar - required_factor)
-        } else if attributes.ar < 8.0 {
-            ar_factor = 0.1 * (8.0 - attributes.ar)
-        }
 
-        aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
+        if attributes.ar > required_factor {
+            let ar_factor = buff_factor * (attributes.ar - required_factor);
+            aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
+        } else if attributes.ar < 8.0 {
+            let mut buff = 1.3;
+
+            if attributes.ar <= 5.0 {
+                buff += (5.0 - attributes.ar) / 50.0;
+            }
+
+            aim_value *= (buff * len_bonus).min(1.75);
+        }
 
         // CS bonus
         if attributes.cs > 6.0 {
@@ -486,16 +491,22 @@ impl OsuPPInner {
         }
 
         // AR bonus
-        let mut ar_factor: f64 = 0.0;
         let required_factor = if self.mods.rx() { 10.5 } else { 10.33 };
         let buff_factor = if self.mods.rx() { 0.4 } else { 0.3 };
-        if attributes.ar > required_factor {
-            ar_factor = buff_factor * (attributes.ar - required_factor)
-        } else if attributes.ar < 8.0 {
-            ar_factor = 0.1 * (8.0 - attributes.ar)
-        }
 
-        speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
+        if attributes.ar > required_factor {
+            let ar_factor = buff_factor * (attributes.ar - required_factor);
+            speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
+        } else if attributes.ar < 8.0 {
+            let mut buff = 1.3;
+
+            if attributes.ar <= 5.0 {
+                buff += (5.0 - attributes.ar) / 50.0;
+            }
+
+            println!("low ar buff: {}", buff * len_bonus);
+            speed_value *= (buff * len_bonus).min(1.75);
+        }
 
         // HD bonus (this would include the Blinds mod but it's currently not representable)
         if self.mods.hd() {
