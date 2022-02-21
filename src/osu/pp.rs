@@ -420,7 +420,7 @@ impl OsuPPInner {
             let ar_factor = buff_factor * (attributes.ar - required_factor);
             aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
         } else if attributes.ar < 8.0 {
-            let mut buff = 1.2;
+            let mut buff = 1.3;
 
             if attributes.ar <= 5.0 {
                 buff += (5.0 - attributes.ar) / 50.0;
