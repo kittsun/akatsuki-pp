@@ -426,7 +426,7 @@ impl OsuPPInner {
                 buff += (5.0 - attributes.ar) / 50.0;
             }
 
-            aim_value *= buff * len_bonus;
+            aim_value *= (buff * len_bonus).max(1.75);
         }
 
         // CS bonus
@@ -504,7 +504,7 @@ impl OsuPPInner {
                 buff += (5.0 - attributes.ar) / 50.0;
             }
 
-            speed_value *= buff * len_bonus;
+            speed_value *= (buff * len_bonus).max(1.75);
         }
 
         // HD bonus (this would include the Blinds mod but it's currently not representable)
