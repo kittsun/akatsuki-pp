@@ -504,6 +504,7 @@ impl OsuPPInner {
                 buff += (5.0 - attributes.ar) / 50.0;
             }
 
+            println!("low ar buff: {}", buff * len_bonus);
             speed_value *= (buff * len_bonus).min(1.75);
         }
 
