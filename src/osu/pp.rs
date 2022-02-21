@@ -399,8 +399,9 @@ impl OsuPPInner {
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95 + 0.4 * f64::min(1.0, total_hits / 2000.0)
-                + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count);
+        let len_bonus = 0.95
+            + 0.4 * f64::min(1.0, total_hits / 2000.0)
+            + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count);
 
         aim_value *= len_bonus;
 
@@ -471,8 +472,9 @@ impl OsuPPInner {
             (5.0 * (attributes.speed_strain / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 0.95 + 0.4 * f64::min(1.0, total_hits / 2000.0)
-                + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count);
+        let len_bonus = 0.95
+            + 0.4 * f64::min(1.0, total_hits / 2000.0)
+            + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count);
 
         speed_value *= len_bonus;
 
