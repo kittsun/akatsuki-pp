@@ -84,9 +84,7 @@ pub fn stars(
     };
 
     let star_rating = calculate_star_rating(aim_rating, speed_rating, flashlight_rating);
-    let aim_difficult_strain_count = skills
-        .aim()
-        .count_difficult_strains();
+    let aim_difficult_strain_count = skills.aim().count_difficult_strains();
     let speed_difficult_strain_count = skills
         .speed_flashlight()
         .0
