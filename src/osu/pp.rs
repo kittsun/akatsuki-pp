@@ -399,13 +399,9 @@ impl OsuPPInner {
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = if self.mods.rx() {
-            0.95 + 0.4 * f64::min(1.0, total_hits / 2000.0)
-                + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count)
-        } else {
-            0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
-                + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
-        };
+        let len_bonus = 0.95
+            + 0.4 * f64::min(1.0, total_hits / 2000.0)
+            + calculate_length_bonus(total_hits, attributes.aim_difficult_strain_count);
 
         aim_value *= len_bonus;
 
@@ -432,7 +428,7 @@ impl OsuPPInner {
         aim_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
 
         // CS bonus
-        if attributes.cs > 6.0 && self.mods.rx() {
+        if attributes.cs > 6.0 {
             let diff = attributes.cs - 6.0;
             aim_value *= 1.03 + (diff / 20.0);
         }
@@ -479,13 +475,9 @@ impl OsuPPInner {
             (5.0 * (attributes.speed_strain / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = if self.mods.rx() {
-            0.95 + 0.4 * f64::min(1.0, total_hits / 2000.0)
-                + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count)
-        } else {
-            0.95 + 0.4 * (total_hits / 2000.0).min(1.0)
-                + (total_hits > 2000.0) as u8 as f64 * 0.5 * (total_hits / 2000.0).log10()
-        };
+        let len_bonus = 0.95
+            + 0.4 * f64::min(1.0, total_hits / 2000.0)
+            + calculate_length_bonus(total_hits, attributes.speed_difficult_strain_count);
 
         speed_value *= len_bonus;
 
