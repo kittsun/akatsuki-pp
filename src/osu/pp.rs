@@ -503,7 +503,7 @@ impl OsuPPInner {
 
         if attributes.ar > required_factor {
             ar_factor = buff_factor * (attributes.ar - required_factor);
-        } else if attributes.ar < 5.0 && self.mods.rx() {
+        } else if attributes.ar < 5.0 {
             ar_factor = 0.7 * (5.0 - attributes.ar);
         } else if attributes.ar < 8.0 {
             ar_factor = 0.5 * (8.0 - attributes.ar);
