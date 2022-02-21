@@ -426,7 +426,7 @@ impl OsuPPInner {
                 buff += (5.0 - attributes.ar) / 50.0;
             }
 
-            aim_value *= (buff * len_bonus).max(1.75);
+            aim_value *= (buff * len_bonus).min(1.75);
         }
 
         // CS bonus
@@ -498,13 +498,13 @@ impl OsuPPInner {
             let ar_factor = buff_factor * (attributes.ar - required_factor);
             speed_value *= 1.0 + ar_factor * len_bonus; // * Buff for longer maps with high AR.
         } else if attributes.ar < 8.0 {
-            let mut buff = 1.2;
+            let mut buff = 1.3;
 
             if attributes.ar <= 5.0 {
                 buff += (5.0 - attributes.ar) / 50.0;
             }
 
-            speed_value *= (buff * len_bonus).max(1.75);
+            speed_value *= (buff * len_bonus).min(1.75);
         }
 
         // HD bonus (this would include the Blinds mod but it's currently not representable)
